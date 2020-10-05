@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title> Todo App </title>
+		<style>
+			.hidden {
+				display: none;
+			}
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Todo App</h1>
+		<div id='error-message' class="hidden">Something Went Wrong!</div>
+
+		<h2>Todo Lists</h2>
+		<form id="newListForm">
+			<div>
+				<input type="text" id="name" name="name">
+				<input type="submit" value="Create"/>
+			</div>
+		</form>
+		{% if data.get('todolists') %}
+			<ul id="todolists">
+				{% for item in data.get('todolists') %}
+					<li data-id="{{ item.id }}">
+						<input type="button" value="{{item.name}}" onclick="getTodoList(event)" data-id="{{ item.id }}"/>
+						<input type="button" value="Delete" onclick="sendDeleteList(event)" data-id="{{ item.id }}"/>
+					</li>
+				{% endfor %}
+			</ul>
+
+			<h2 id='list_name'>{{ data.get('todolist').name }} </h2>
+
+			<h3>Todos:</h3>
+
+			<form id="newTodoForm" data-id="{{ data.get('todolist').id }}">
+				<div>
+					<input type="text" id="description" name="description">
+					<input type="submit" value="Create"/>
+				</div>
+			</form>
+			<ul id="todos">
+				{% for item in data.get('todos') %}
+					<li>
+						<input class="check-completed" type="checkbox" {% if item.completed %} checked {% endif %} data-id="{{ item.id }}"/>
+						{{ item.description }}
+						<input type="button" value="Delete" onclick="sendDeleteTodo(event)" data-id="{{ item.id }}"/>
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<div id='no-lists'>No lists exist yet, create one to get started.</div>
+		{% endif %}
+	</body>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+</html>

@@ -1,0 +1,12 @@
+version: 1
+app:
+  mode: production
+  port: 8000
+database:
+  username: username
+  password: password
+  database_name: project
+  host: default
+  port: default
+jwt:
+  JWT_SECRET: default

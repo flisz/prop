@@ -1,0 +1,27 @@
+version: 1
+formatters:
+  simple:
+    format: '%(asctime)s %(levelname)-8s %(name)s : %(message)s'
+    datefmt: '%m-%d %H:%M:%S'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+loggers:
+  Setup:
+    level: DEBUG
+    handlers: [console]
+    propagate: no
+  WebApp:
+    level: DEBUG
+    handlers: [console]
+    propagate: no
+  Database:
+    level: INFO
+    handlers: [console]
+    propagate: no
+root:
+  level: DEBUG
+  handlers: [console]
