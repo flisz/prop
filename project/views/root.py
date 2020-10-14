@@ -1,13 +1,14 @@
 from .mixins.base import BaseView
 
 
-__all__ = ('ListView',)
+__all__ = ('RootView',)
 
 
-class ListView(BaseView):
+class RootView(BaseView):
+    route_base = '/'
+
     def index(self):
         return "Hello"
 
     def health(self):
         return "Healthy"
-

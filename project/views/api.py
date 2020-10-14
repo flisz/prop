@@ -1,5 +1,15 @@
+from .mixins.base import BaseView
 
 
+__all__ = ('ApiView',)
+
+
+class ApiView(BaseView):
+    @classmethod
+    def __ignore__(cls):
+        return True
+
+"""
 # routes
 @app.route('/')
 def index():
@@ -138,3 +148,4 @@ def set_todo_completed():
         return jsonify(body)
     else:
         return abort(400)
+"""
