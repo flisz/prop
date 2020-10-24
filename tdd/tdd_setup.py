@@ -57,7 +57,8 @@ def tdd_env_USER_HOME_isdir(env):
 def tdd_env_ROOT_is_valid(env):
     """
     GIVEN: an env tdd_fixture
-    WHEN: requesting PVCFORM_ROOT property
+    WHEN: requesting
+    ROOT property
     AND: return value is a directory
     THEN: directory contains 'tdd' and 'migration' directories
     AMD: directory contains an 'env.PROJECT_NAME' directory

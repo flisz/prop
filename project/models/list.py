@@ -3,6 +3,9 @@ from .item import Item
 from project.db import db
 
 
+__all__ = ('List',)
+
+
 class List(Model):
     """
     Base Model Provides:

@@ -1,0 +1,9 @@
+version: 1
+project_name: project
+app:
+  mode: production
+  port: 8000
+  secret_key: change-to-a-really-secret-key
+jwt:
+  JWT_SECRET: change-to-a-nice-jwt-secret
+log_level: DEBUG

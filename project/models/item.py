@@ -1,6 +1,7 @@
 from .base import Model
 from project.db import db
 
+__all__ = ('Item',)
 
 class Item(Model):
     """

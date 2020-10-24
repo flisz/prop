@@ -1,35 +1,44 @@
+"""
+Many thanks to Bob Waycott and Miguel Grinberg for excellent code examples and advice:
+https://bobwaycott.com/blog/how-i-use-flask/organizing-flask-models-with-automatic-discovery/
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+"""
+
 from os import walk
 from os.path import abspath, basename, dirname, join
+from sys import modules
 from importlib import import_module
 from inspect import isclass
 from flask_sqlalchemy import Model
 from flask_classful import FlaskView
 
 # main project path & module name
-PROJ_DIR = abspath(join(dirname(abspath(__file__)), '../..'))
+
+PROJ_DIR = abspath(join(dirname(abspath(__file__)), '..'))
 APP_MODULE = basename(PROJ_DIR)
 
 
 def get_modules(module):
-    """Returns all .py modules in given `module` directory that are not `__init__`.
-
+    """
+    Returns all .py modules in given `module` directory that are not `__init__`.
     Usage:
       get_modules('models')
 
     Yields dot-notated module paths for discovery/import.
     Example:
-      /proj/app/models/foo.py > app.models.foo
+      /project/models/foo.py > models.foo
     """
     file_dir = abspath(join(PROJ_DIR, module))
     for root, dirnames, files in walk(file_dir):
-        mod_path = '{}{}'.format(APP_MODULE, root.split(PROJ_DIR)[1]).replace('/', '.')
+        mod_path = '{}{}'.format(APP_MODULE, root.split(PROJ_DIR)[1]).replace('/', '.').replace('\\', '.')
         for filename in files:
             if filename.endswith('.py') and not filename.startswith('__init__'):
                 yield '.'.join([mod_path, filename[0:-3]])
 
 
 def dynamic_loader(module, compare):
-    """Iterates over all .py files in `module` directory, finding all classes that
+    """
+    Iterates over all .py files in `module` directory, finding all classes that
     match `compare` function.
     Other classes/objects in the module directory will be ignored.
 

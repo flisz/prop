@@ -1,15 +1,15 @@
 import pytest
 
-import project.environment
+import project.setup
 
 
 @pytest.fixture(scope='function')
 def env():
     """
-    Purpose: used for unit tests of env_config
+    Purpose: used for unit tests of setup/__init__.py
     Returns: freshly instantiated env object for each test case
     """
-    return project.environment.EnvironmentConfig()
+    return project.setup.SetupConfig()
 
 
 @pytest.fixture

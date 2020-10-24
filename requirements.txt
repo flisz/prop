@@ -9,4 +9,5 @@ flask
 flask-wtf
 flask-sqlalchemy
 flask-migrate
+flask-classful
 SQLAlchemy-utils

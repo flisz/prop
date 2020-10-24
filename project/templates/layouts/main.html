@@ -1,4 +1,5 @@
 <!doctype html>
+<html>
 <head>
 <meta charset="utf-8">
 <title>{% block title %}{% endblock %}</title>
@@ -34,7 +35,7 @@
   <!--[if lt IE 9]><script src="/static/js/libs/respond-1.4.2.min.js"></script><![endif]-->
   <script type="text/javascript">
     var csrf_token = "{{ csrf_token() }}";
-    {# The code below will attach a CSRF token to any AJAX request.
+    {# The code below will attach a CSRF token to any AJAX request. #}
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
@@ -60,7 +61,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">🔥</a>
+          <a class="navbar-brand" href="/"></a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -90,9 +91,8 @@
             </li>
           </ul>
           <ul class="nav navbar-nav">
-            <li {% if request.endpoint == 'venues' %} class="active" {% endif %}><a href="{{ url_for('venues') }}">Venues</a></li>
-            <li {% if request.endpoint == 'artists' %} class="active" {% endif %}><a href="{{ url_for('artists') }}">Artists</a></li>
-            <li {% if request.endpoint == 'shows' %} class="active" {% endif %}><a href="{{ url_for('shows') }}">Shows</a></li>
+            <li {% if request.endpoint == 'items' %} class="active" {% endif %}><a href="{{ url_for('ItemView:index') }}">Items</a></li>
+            <li {% if request.endpoint == 'lists' %} class="active" {% endif %}><a href="{{ url_for('ListView:index') }}">Lists</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -120,7 +120,7 @@
 
   <div id="footer">
     <div class="container">
-      <p>Fyyur &copy; All Rights Reserved.</p>
+      <p>Version: </p>
       {% block footer %}{% endblock %}
     </div>
   </div>

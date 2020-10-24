@@ -1,0 +1,7 @@
+version: 1
+database:
+  database_name: default
+  username: postgres
+  password: default
+  host: default
+  port: default

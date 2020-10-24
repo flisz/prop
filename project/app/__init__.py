@@ -1,7 +1,13 @@
-from os.path import abspath, isfile, join
+"""
+Many thanks to Bob Waycott and Miguel Grinberg for excellent code examples and advice:
+https://bobwaycott.com/blog/how-i-use-flask/organizing-flask-models-with-automatic-discovery/
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+"""
+
+from copy import deepcopy
 from flask import Flask
 
-from project.setup.environment import ENV
+from project.setup import SetupConfig
 from project.setup.loggers import LOGGERS
 from project.app.csrf import csrf
 from project.db import db, init_db
@@ -11,7 +17,7 @@ from project.views import init_views
 log = LOGGERS.Setup
 
 
-def create_app(config_file=None):
+def create_app(config_yaml=None):
     """Default application factory.
 
     Default usage:
@@ -25,18 +31,14 @@ def create_app(config_file=None):
     Returns Flask app object.
     Raises EnvironmentError if config_file cannot be found.
     """
-    if config_file is None:
-        config_file = join(ENV.ROOT, 'config.yaml')  # os.path.join()
-    else:
-        config_file = abspath(config_file)
 
-    # raise error if config_file doesn't exist
-    if not isfile(config_file):
-        raise EnvironmentError('App config file does not exist at %s' % config_file)
-    log.info(f"Using config_file: {config_file}")
+    setup = SetupConfig(config_yaml=config_yaml)
 
     # start app setup
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder=setup.TEMPLATES)
+    app.config['SETUP'] = deepcopy(setup)
+    app.config['SECRET_KEY'] = deepcopy(setup.SECRET_KEY)
+
     set_app_mode(app)
 
     # setup csrf
@@ -47,6 +49,9 @@ def create_app(config_file=None):
 
     # register views
     init_views(app)
+
+
+
     return app
 
 
